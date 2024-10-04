@@ -19,15 +19,18 @@ Las máquinas estarán conectadas a Internet a través de un router **pfSense**.
 
 2. **Configuración de los clientes**
    - Configuramos los clientes (Windows y Ubuntu) para obtener la IP automáticamente desde el servidor DHCP.
+   - Ademas de la correcta configuración del pfsense.
+     ![Captura de configuración LAN](/fotossri/foto2.png)
    - Verificamos la conectividad entre las máquinas usando `ping` para comprobar que pueden comunicarse entre sí y acceder a Internet.
-
-   ![Captura de configuración en Windows](/fotossri/foto2.png)
-   ![Captura de configuración en Ubuntu](/fotossri/foto3.png)
+**windows**
+   ![Captura de configuración en Windows](/fotossri/foto3.png)
+**Ubuntu**
+   ![Captura de configuración en Ubuntu](/fotossri/foto4.png)
 
 3. **Configuración de Debian**
    - Asignamos la IP estática **10.0.16.2** a la máquina Debian.
    
-   ![Captura de configuración en Debian](/fotossri/foto4.png)
+   ![Captura de configuración en Debian](/fotossri/foto5.png)
 
 ### Ejercicio 1: Configuración del servidor DHCP
 
@@ -39,8 +42,10 @@ Las máquinas estarán conectadas a Internet a través de un router **pfSense**.
    - Actualizamos el sistema e instalamos el servidor DHCP:
      ```bash
      sudo apt update
+          ![Captura de configuración LAN](/fotossri/foto6.png)
      sudo apt install isc-dhcp-server
      ```
+     ![Captura de configuración LAN](/fotossri/foto7.png)
 
 2. **Configuración del archivo `dhcpd.conf`**
    - Editamos el archivo de configuración del DHCP:
@@ -56,13 +61,13 @@ Las máquinas estarán conectadas a Internet a través de un router **pfSense**.
          default-lease-time 1296000;  # 15 días
          max-lease-time 2592000;      # 30 días
      }
-
+     
      host ubuntu-client {
          hardware ethernet [MAC de Ubuntu];
          fixed-address 10.0.16.60;
      }
      ```
-
+![Captura de configuración LAN](/fotossri/foto9.png)
 3. **Configuración de la interfaz de red**
    - Editamos el archivo para especificar la interfaz de red que debe usar el servidor DHCP:
      ```bash
@@ -72,25 +77,27 @@ Las máquinas estarán conectadas a Internet a través de un router **pfSense**.
      ```plaintext
      INTERFACESv4="enp0s3"
      ```
-
+![Captura de configuración LAN](/fotossri/foto10.png)
 4. **Verificación de la asignación de IPs**
    - Verificamos si las IPs se están asignando correctamente ejecutando:
      ```bash
      cat /var/lib/dhcp/dhcpd.leases
      ```
-
+![Captura de configuración LAN](/fotossri/foto11.png)
+![Captura de configuración LAN](/fotossri/foto12.png)
+![Captura de configuración LAN](/fotossri/foto13.png)
 5. **Capturas de la conexión de clientes**
    - Verificamos la conectividad entre los clientes Windows y Ubuntu, confirmando que tienen conexión a Internet.
    
-   ![Captura de cliente Windows](/fotossri/foto5.png)
-   ![Captura de cliente Ubuntu](/fotossri/foto6.png)
+   ![Captura de cliente Windows](/fotossri/foto14.png)
+   ![Captura de cliente Ubuntu](/fotossri/foto15.png)
 
 6. **Verificación del servicio DHCP**
    - Finalmente, verificamos que el servicio DHCP está activo y funcionando:
      ```bash
      sudo systemctl status isc-dhcp-server
      ```
-
+![Captura de configuración LAN](/fotossri/foto16.png)
 ### Ejercicio 3: Funcionamiento del servicio
 
 1. **¿Qué es `journalctl`?**
@@ -101,19 +108,19 @@ Las máquinas estarán conectadas a Internet a través de un router **pfSense**.
      ```bash
      sudo journalctl -u isc-dhcp-server
      ```
-
+![Captura de configuración LAN](/fotossri/foto17.png)
 3. **Filtrar por un intervalo de tiempo específico**
    - Para ver los logs generados entre un rango de tiempo, por ejemplo, desde ayer a las 14:00 hasta hoy a las 12:00, usamos:
      ```bash
      sudo journalctl -u isc-dhcp-server --since "2024-10-03 14:00:00" --until "2024-10-04 12:00:00"
      ```
-
+![Captura de configuración LAN](/fotossri/foto18.png)
 4. **Filtrar los registros relacionados con la asignación de IPs**
    - Para ver solo los eventos relacionados con la asignación de direcciones IP:
      ```bash
      sudo journalctl -u isc-dhcp-server | grep DHCPACK
      ```
-
+![Captura de configuración LAN](/fotossri/foto19.png)
 5. **Explicación de los mensajes clave en los logs**
    - **DHCPDISCOVER**: El cliente DHCP envía una solicitud para descubrir un servidor DHCP en la red.
    - **DHCPOFFER**: El servidor DHCP ofrece una dirección IP al cliente.
@@ -123,9 +130,5 @@ Las máquinas estarán conectadas a Internet a través de un router **pfSense**.
 
 ---
 
-### **Conclusión**
 
-Este documento explica los pasos para configurar un servidor DHCP en Debian y cómo verificar el correcto funcionamiento del servidor a través de `journalctl`.
-
----
 
