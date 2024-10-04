@@ -21,13 +21,13 @@ Las máquinas estarán conectadas a Internet a través de un router **pfSense**.
    - Configuramos los clientes (Windows y Ubuntu) para obtener la IP automáticamente desde el servidor DHCP.
    - Verificamos la conectividad entre las máquinas usando `ping` para comprobar que pueden comunicarse entre sí y acceder a Internet.
 
-   ![Captura de configuración en Windows](/fotossri/foto1.png)
-   ![Captura de configuración en Ubuntu](/fotossri/foto1.png)
+   ![Captura de configuración en Windows](/fotossri/foto2.png)
+   ![Captura de configuración en Ubuntu](/fotossri/foto3.png)
 
 3. **Configuración de Debian**
    - Asignamos la IP estática **10.0.16.2** a la máquina Debian.
    
-   ![Captura de configuración en Debian](/fotossri/foto1.png)
+   ![Captura de configuración en Debian](/fotossri/foto4.png)
 
 ### Ejercicio 1: Configuración del servidor DHCP
 
@@ -82,8 +82,8 @@ Las máquinas estarán conectadas a Internet a través de un router **pfSense**.
 5. **Capturas de la conexión de clientes**
    - Verificamos la conectividad entre los clientes Windows y Ubuntu, confirmando que tienen conexión a Internet.
    
-   ![Captura de cliente Windows](/fotossri/foto1.png)
-   ![Captura de cliente Ubuntu](/fotossri/foto1.png)
+   ![Captura de cliente Windows](/fotossri/foto5.png)
+   ![Captura de cliente Ubuntu](/fotossri/foto6.png)
 
 6. **Verificación del servicio DHCP**
    - Finalmente, verificamos que el servicio DHCP está activo y funcionando:
